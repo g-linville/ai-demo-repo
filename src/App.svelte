@@ -7,6 +7,7 @@
         <input
           type="checkbox"
           bind:checked={todo.completed}
+          on:change={saveTodos}
         />
         <span>{todo.text}</span>
         <button on:click={() => deleteTodo(todo.id)}>Delete</button>
@@ -24,8 +25,23 @@
 </form>
 
 <script>
+  import { onMount } from 'svelte';
+
   let todos = [];
   let newTodo = '';
+
+  // Load todos from localStorage on component mount
+  onMount(() => {
+    const savedTodos = localStorage.getItem('svelte-todos');
+    if (savedTodos) {
+      todos = JSON.parse(savedTodos);
+    }
+  });
+
+  // Save todos to localStorage
+  function saveTodos() {
+    localStorage.setItem('svelte-todos', JSON.stringify(todos));
+  }
 
   function addTodo() {
     if (newTodo.trim()) {
@@ -35,11 +51,13 @@
         completed: false
       }];
       newTodo = '';
+      saveTodos();
     }
   }
 
   function deleteTodo(id) {
     todos = todos.filter(todo => todo.id !== id);
+    saveTodos();
   }
 </script>
 

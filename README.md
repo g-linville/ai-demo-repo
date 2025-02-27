@@ -7,7 +7,7 @@ A simple Todo list application built with Svelte and Vite.
 - Add new todos
 - Mark todos as completed
 - Delete todos
-- Persistent state during session
+- Persistent storage using localStorage (tasks are saved between browser refreshes)
 - Clean and modern UI
 
 ## Getting Started
